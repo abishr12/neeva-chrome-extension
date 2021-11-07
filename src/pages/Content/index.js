@@ -1,8 +1,11 @@
-console.log('Content script works - 9009!');
+console.log('Content script works - 9019!');
 console.log('Must reload extension for modifications to take effect.');
 
 const activateExtension = (change) => {
-  console.log('activated');
+  console.log('activated', change);
+  if (change === 'false') {
+    return;
+  }
   if (document.title.indexOf('Google') !== -1) {
     //Creating Elements
     const searchBar = document.querySelector('[aria-label="Search"]');
@@ -29,7 +32,5 @@ const activateExtension = (change) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log('request message', request.message);
-  if (request.message === 'true') {
-    activateExtension(request.message);
-  }
+  activateExtension(request.message);
 });

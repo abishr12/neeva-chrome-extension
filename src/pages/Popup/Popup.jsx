@@ -15,7 +15,6 @@ const Popup = () => {
     chrome.tabs.query({currentWindow: true, active: true}, async function (tabs){
     var activeTab = tabs[0];
     await chrome.tabs.sendMessage(activeTab.id, {"message": `${action}`});
-    setAction(!action)
 
     console.log('action', action)
    });
@@ -23,16 +22,14 @@ const Popup = () => {
 
   useEffect(() => {
 
-    if(action) {
       activateExtension();
-    } 
   }, [action, activateExtension])
 
 
   return (
     <div className="App">
       <header className="App-header">
-        <button id="changeColor" onClick={activateExtension} >Activate</button>
+        <button id="changeColor" onClick={() => setAction(!action)} >Activate</button>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/pages/Popup/Popup.jsx</code> and save to reload.
