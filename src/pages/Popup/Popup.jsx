@@ -4,7 +4,7 @@ import './Popup.css';
 
 const Popup = () => {
 
-  const [action, setAction] = useState(false)
+  const [action, setAction] = useState(null)
 
 
   // toggle on and off - https://stackoverflow.com/questions/5557641/how-can-i-reset-div-to-its-original-state-after-it-has-been-modified-by-java
@@ -21,8 +21,9 @@ const Popup = () => {
   }, [action]);
 
   useEffect(() => {
-
+    if (action !== null) {
       activateExtension();
+    }
   }, [action, activateExtension])
 
 
