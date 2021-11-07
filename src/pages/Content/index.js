@@ -1,20 +1,35 @@
-console.log('Content script works - 11!');
+console.log('Content script works - 9009!');
 console.log('Must reload extension for modifications to take effect.');
 
-if (document.title.indexOf('Google') !== -1) {
-  //Creating Elements
-  const searchBar = document.querySelector('[aria-label="Search"]');
-  const searchQuery = searchBar.getAttribute('value');
-  searchBar.setAttribute('value', `${searchQuery} in 2021`);
+const activateExtension = (change) => {
+  console.log('activated');
+  if (document.title.indexOf('Google') !== -1) {
+    //Creating Elements
+    const searchBar = document.querySelector('[aria-label="Search"]');
+    const searchQuery = searchBar.getAttribute('value');
+    searchBar.setAttribute('value', `${searchQuery} in 2021`);
 
-  const ads = document.getElementsByClassName('uEierd');
-  //   ads.map((ad) => (ad.style.backgroundColor = 'blue'));
+    const textAds = document.getElementsByClassName('uEierd');
 
-  Array.prototype.forEach.call(ads, (ad) => {
-    ad.style.backgroundColor = 'red';
-    const adText = ad.getElementsByClassName('jpu5Q VqFMTc p8AiDd');
-    adText[0].style.backgroundColor = 'red';
-  });
+    const carouselAds = document.getElementsByClassName('DUkiH cu-container');
 
-  console.log('ads', ads);
-}
+    Array.prototype.forEach.call(textAds, (ad) => {
+      ad.style.backgroundColor = 'red';
+      const adText = ad.getElementsByClassName('jpu5Q VqFMTc p8AiDd');
+      adText[0].style.backgroundColor = 'red';
+    });
+
+    Array.prototype.forEach.call(carouselAds, (ad) => {
+      ad.style.backgroundColor = 'red';
+      const adText = ad.getElementsByClassName('eroAL VqFMTc p8AiDd');
+      adText[0].style.backgroundColor = 'red';
+    });
+  }
+};
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log('request message', request.message);
+  if (request.message === 'true') {
+    activateExtension(request.message);
+  }
+});
