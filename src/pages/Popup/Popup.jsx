@@ -21,28 +21,18 @@ const Popup = () => {
   }, [action]);
 
   useEffect(() => {
-    if (action !== null) {
       activateExtension();
-    }
   }, [action, activateExtension])
 
 
   return (
     <div className="App">
       <header className="App-header">
-        <button id="changeColor" onClick={() => setAction(!action)} >Activate</button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/pages/Popup/Popup.jsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Hello
-        </a>
+        {/* <button id="changeColor" onClick={() => setAction(!action)} >Activate</button> */}
+        <label class="switch" onChange={() => setAction(!action)}>
+          <input type="checkbox"/>
+          <span class="slider round"></span>
+        </label>
       </header>
     </div>
   );

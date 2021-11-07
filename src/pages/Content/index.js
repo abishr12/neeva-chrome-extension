@@ -1,4 +1,4 @@
-console.log('Content script works - 9019!');
+console.log('Content script works - 9029!');
 console.log('Must reload extension for modifications to take effect.');
 
 const activateExtension = (change) => {
