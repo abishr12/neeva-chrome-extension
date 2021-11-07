@@ -13,10 +13,13 @@ const Popup = () => {
   
   const activateExtension = useCallback(() => {
     chrome.tabs.query({currentWindow: true, active: true}, async function (tabs){
-    var activeTab = tabs[0];
+    const activeTab = tabs[0];
     await chrome.tabs.sendMessage(activeTab.id, {"message": `${action}`});
-
-    console.log('action', action)
+    chrome.action.setBadgeBackgroundColor({ color: 'red' }, () => {
+    // callback
+    chrome.action.setBadgeText({ tabId:activeTab.id,  text: action ? 'ON' : 'OFF' });
+    });
+    
    });
   }, [action]);
 
@@ -28,7 +31,9 @@ const Popup = () => {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <button id="changeColor" onClick={() => setAction(!action)} >Activate</button> */}
+        <h2 style={{color: action && 'red'}}>
+          Extension: {action ? 'ON' : 'OFF'}
+        </h2>
         <label class="switch" onChange={() => setAction(!action)}>
           <input type="checkbox"/>
           <span class="slider round"></span>
