@@ -24,6 +24,14 @@ const activateExtension = (change) => {
         const adText = ad.getElementsByClassName('eroAL VqFMTc p8AiDd');
         adText[0].style.backgroundColor = 'red';
       });
+
+      const totalAdsOnPage = textAds.length + carouselAds.length;
+      // localStorage['total_ads'] = totalAdsOnPage;
+
+      chrome.runtime.sendMessage({
+        totalAdsOnPage: totalAdsOnPage,
+        message: 'totalAdsOnPage', // or whatever you want to send
+      });
     } else if (change === 'false') {
       //Restore Elements
       const searchBar = document.querySelector('[aria-label="Search"]');
@@ -42,11 +50,16 @@ const activateExtension = (change) => {
         const adText = ad.getElementsByClassName('eroAL VqFMTc p8AiDd');
         adText[0].style.backgroundColor = '';
       });
+
+      chrome.runtime.sendMessage({
+        totalAdsOnPage: 0,
+        message: 'totalAdsOnPage', // or whatever you want to send
+      });
     }
   }
 };
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log('request message', request.message);
+  console.log('request', request);
   activateExtension(request.message);
 });

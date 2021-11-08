@@ -5,26 +5,32 @@ import './Popup.css';
 const Popup = () => {
 
   const [action, setAction] = useState(null)
+  const [totalAdsOnPage, setTotalAdsOnPage] = useState(0);
 
-
-  // toggle on and off - https://stackoverflow.com/questions/5557641/how-can-i-reset-div-to-its-original-state-after-it-has-been-modified-by-java
-  // Toolbar Image - https://neilpatel.com/blog/chrome-extension/ 
-  // https://dev.to/paulasantamaria/chrome-extensions-adding-a-badge-644
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if(request.message === "totalAdsOnPage") {
+      setTotalAdsOnPage(request.totalAdsOnPage)
+    }
+  });
   
   const activateExtension = useCallback(() => {
     chrome.tabs.query({currentWindow: true, active: true}, async function (tabs){
     const activeTab = tabs[0];
     await chrome.tabs.sendMessage(activeTab.id, {"message": `${action}`});
     chrome.action.setBadgeBackgroundColor({ color: 'red' }, () => {
-    // callback
-    chrome.action.setBadgeText({ tabId:activeTab.id,  text: action ? 'ON' : 'OFF' });
+      // callback
+      chrome.action.setBadgeText({ tabId:activeTab.id,  text: action ? 'ON' : 'OFF' });
     });
-    
+
    });
   }, [action]);
 
   useEffect(() => {
+    if (action !== null) {
+      console.log('console is activated')
       activateExtension();
+
+    }
   }, [action, activateExtension])
 
 
@@ -34,10 +40,13 @@ const Popup = () => {
         <h2 style={{color: action && 'red'}}>
           Extension: {action ? 'ON' : 'OFF'}
         </h2>
-        <label class="switch" onChange={() => setAction(!action)}>
+        <label className="switch" onChange={() => setAction(!action)}>
           <input type="checkbox"/>
-          <span class="slider round"></span>
+          <span className="slider round"></span>
         </label>
+        <h2>
+          Ads On Page: {totalAdsOnPage}
+        </h2>
       </header>
     </div>
   );
