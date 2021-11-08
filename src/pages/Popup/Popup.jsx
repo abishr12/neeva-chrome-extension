@@ -8,6 +8,9 @@ const Popup = () => {
   const [totalAdsOnPage, setTotalAdsOnPage] = useState(0);
 
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if(request.message === "resetAdsOnPage") {
+      setTotalAdsOnPage(0)
+    }
     if(request.message === "totalAdsOnPage") {
       setTotalAdsOnPage(request.totalAdsOnPage)
     }

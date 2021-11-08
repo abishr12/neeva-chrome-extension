@@ -1,4 +1,3 @@
-console.log('Content script works - 9029!');
 console.log('Must reload extension for modifications to take effect.');
 
 const activateExtension = (change) => {
@@ -52,8 +51,7 @@ const activateExtension = (change) => {
       });
 
       chrome.runtime.sendMessage({
-        totalAdsOnPage: 0,
-        message: 'totalAdsOnPage', // or whatever you want to send
+        message: 'resetAdsOnPage', // or whatever you want to send
       });
     }
   }
