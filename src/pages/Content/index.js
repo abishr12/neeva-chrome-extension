@@ -1,7 +1,11 @@
-console.log('Must reload extension for modifications to take effect.');
-
 const activateExtension = (change) => {
-  console.log('activated', change);
+  const changeFunction = (element, className, color) => {
+    element.style.backgroundColor = color;
+    const adText = element.getElementsByClassName(className);
+    if (adText.length) {
+      adText[0].style.backgroundColor = color;
+    }
+  };
   if (document.title.indexOf('Google') !== -1) {
     const searchBar = document.querySelector('[aria-label="Search"]');
     const searchQuery = searchBar.getAttribute('value');
@@ -9,26 +13,19 @@ const activateExtension = (change) => {
     const carouselAds = document.getElementsByClassName('DUkiH cu-container');
 
     if (change === 'true') {
-      //Change elements
       searchBar.setAttribute('value', `${searchQuery} in 2021`);
 
-      Array.prototype.forEach.call(textAds, (ad) => {
-        ad.style.backgroundColor = 'red';
-        const adText = ad.getElementsByClassName('jpu5Q VqFMTc p8AiDd');
-        adText[0].style.backgroundColor = 'red';
-      });
+      Array.prototype.forEach.call(textAds, (ad) =>
+        changeFunction(ad, 'jpu5Q VqFMTc p8AiDd', 'red')
+      );
 
-      Array.prototype.forEach.call(carouselAds, (ad) => {
-        ad.style.backgroundColor = 'red';
-        const adText = ad.getElementsByClassName('eroAL VqFMTc p8AiDd');
-        adText[0].style.backgroundColor = 'red';
-      });
-
+      Array.prototype.forEach.call(textAds, (ad) =>
+        changeFunction(ad, 'eroAL VqFMTc p8AiDd', 'red')
+      );
       const totalAdsOnPage = textAds.length + carouselAds.length;
-      // localStorage['total_ads'] = totalAdsOnPage;
 
       chrome.runtime.sendMessage({
-        totalAdsOnPage: totalAdsOnPage,
+        totalAdsOnPage,
         message: 'totalAdsOnPage', // or whatever you want to send
       });
     } else if (change === 'false') {
@@ -38,17 +35,13 @@ const activateExtension = (change) => {
       const restoredQuery = searchQuery.split(' ').slice(0, -2).join(' ');
       searchBar.setAttribute('value', `${restoredQuery}`);
 
-      Array.prototype.forEach.call(textAds, (ad) => {
-        ad.style.backgroundColor = '';
-        const adText = ad.getElementsByClassName('jpu5Q VqFMTc p8AiDd');
-        adText[0].style.backgroundColor = '';
-      });
+      Array.prototype.forEach.call(textAds, (ad) =>
+        changeFunction(ad, 'jpu5Q VqFMTc p8AiDd', '')
+      );
 
-      Array.prototype.forEach.call(carouselAds, (ad) => {
-        ad.style.backgroundColor = '';
-        const adText = ad.getElementsByClassName('eroAL VqFMTc p8AiDd');
-        adText[0].style.backgroundColor = '';
-      });
+      Array.prototype.forEach.call(textAds, (ad) =>
+        changeFunction(ad, 'eroAL VqFMTc p8AiDd', '')
+      );
 
       chrome.runtime.sendMessage({
         message: 'resetAdsOnPage', // or whatever you want to send

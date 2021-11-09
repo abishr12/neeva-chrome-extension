@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import logo from '../../assets/img/logo.svg';
 import './Popup.css';
 
 const Popup = () => {
@@ -47,7 +46,7 @@ const Popup = () => {
           <input type="checkbox"/>
           <span className="slider round"></span>
         </label>
-        <h2>
+        <h2 style={{color: action && 'red'}}>
           Ads On Page: {totalAdsOnPage}
         </h2>
       </header>
