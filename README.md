@@ -4,7 +4,7 @@ The following project is built using the boilerplate https://github.com/samuelsi
 
 The boilerplate provided in the assignment pdf didn't work
 
-## Features
+## Boilerplate Features
 
 This is a basic Chrome Extensions boilerplate to help you write modular and modern Javascript code, load CSS easily and [automatic reload the browser on code changes](https://webpack.github.io/docs/webpack-dev-server.html#automatic-refresh).
 
@@ -40,6 +40,13 @@ Please open up an issue to nudge me to keep the npm packages up-to-date. FYI, it
 
 The extension will appear as such -
 ![Neeva Extension](https://i.ibb.co/K07p5L6/Screen-Shot-2021-11-08-at-5-28-33-PM.png)
+
+Toggle the switch to turn the extension on
+![Neeva Extension On](https://i.ibb.co/Fn8v4fD/Screen-Shot-2021-11-08-at-5-16-25-PM.png)
+
+Toggle the switch again to turn the extension off
+![Neeva Extension Off](https://i.ibb.co/dmVQ0wv/Screen-Shot-2021-11-08-at-5-22-45-PM.png)
+
 
 ## Resources:
 
